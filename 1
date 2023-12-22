@@ -1,0 +1,24 @@
+using HorizonSideRobots
+function cross!(r::Robot)::Nothing
+    for i = 0:3
+        directions!(r, HorizonSide(i))
+    end
+    putmarker!(r)
+end
+
+function directions!(r::Robot, side::HorizonSide)::Nothing
+    while !isborder(r, side)
+        move!(r, side)
+        if !ismarker(r)
+            putmarker!(r)
+        end
+    end
+    side = reverse!(side)
+    while ismarker(r)
+        move!(r, side)
+    end1
+end
+
+function reverse!(side::HorizonSide)::HorizonSide
+    return HorizonSide((Int(side) + 2) % 4)
+end
